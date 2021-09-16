@@ -879,7 +879,7 @@ int main(int argc, char* argv[]){
         }
     }
 	
-//	outFile.close();
+	outFile.close();
 
 // debug
 /*	
