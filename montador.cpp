@@ -1,4 +1,4 @@
-//Universidade de Brasilia - Departamento de Ciencia da Computacao - 1/2021 (Setembro de 2021)
+//Universidade de Brasilia - Departamento de Ciencia da Computacao - 1/2021 (Novembro de 2021)
 //Autor: 		Gabriel Tambara Rabelo
 //Matricula: 	18/0017021
 
@@ -341,7 +341,7 @@ void parser(string *linha, int *contador_palavra, item_linha *itens, int *contad
 */
 };
 
-int handle_tabelas(vector<item_simbolo> *p_tabela_simbolos, item_linha itens, item_instrucao tabela_inst[14], int *contador_palavra, vector<int> *arq_saida, bool *ordem_alt, bool *secText_lido, vector<int> *arq_saida_aux, int *contador_palavra_aux, bool *flag_alt_order, int *contador_linha, bool *secData_lido){
+int handle_tabelas(vector<item_simbolo> *p_tabela_simbolos, item_linha itens, item_instrucao tabela_inst[14], int *contador_palavra, vector<int> *arq_saida, bool *ordem_alt, bool *secText_lido, vector<int> *arq_saida_aux, int *contador_palavra_aux, bool *flag_alt_order, int *contador_linha, bool *secData_lido, vector<int> *mapa_de_bits){
 
 	// inicializações principais
 	bool simbolo_existente = false;
@@ -756,6 +756,28 @@ int handle_ordem_alt(vector<item_simbolo> *p_tabela_simbolos, int *p_contador_pa
 	return 0;
 }
 
+void acha_lista_enderecos(vector<int> *lista_addr, vector<int> *ref){
+	
+	for(int i=0; i< (*ref).size(); i++){
+		if((*ref)[i] == 9){
+			//CASO COPY
+			i++;
+			(*lista_addr).push_back(i);
+			(*lista_addr).push_back(i+1);
+			i++;
+		}else if((*ref)[i] == 14){
+			//CASO STOP
+			i++;
+			break;
+		}else{
+			//CASO GERAL
+			i++;
+			(*lista_addr).push_back(i);
+		}
+	}
+	
+}
+
 int main(int argc, char* argv[]){
 	
 	//DEFININDO TABELA DE INSTRUCOES	
@@ -818,12 +840,14 @@ int main(int argc, char* argv[]){
 	tabela[13].argumentos = 1;
 
 	// Definições e instâncias gerais
-	ifstream arq_entrada(argv[1]);
+	ifstream arq_entrada(argv[3]);
 	string linha;
 	vector<item_simbolo> tabela_simbolos;
 	vector<int> arq_saida;
 	vector<int> arq_saida_aux;
 	vector<int> arq_saida_final;
+	vector<int> mapa_de_bits;
+	vector<int> lista_addr;
 	item_linha itens;
 	int contador_palavra = 0;
 	int contador_palavra_aux = 0;
@@ -845,19 +869,10 @@ int main(int argc, char* argv[]){
 			linha = linha.substr(0, linha.find(";"));
 		}
 		
-//		cout << "linha:" << linha << endl;
 		parser(&linha, &contador_palavra, &itens, &contador_palavra_aux, &ordem_alt, &secText_lido, &contador_linha, &ha_rotulo, tabela);
 		
-		pega = handle_tabelas(&tabela_simbolos, itens, tabela, &contador_palavra, &arq_saida, &ordem_alt, &secText_lido, &arq_saida_aux, &contador_palavra_aux, &flag_alt_order, &contador_linha, &secData_lido);
-//		cout << "ordem_alt: " << ordem_alt << endl; 
-//		cout << "secText_lido: " <<  secText_lido << endl; 
+		pega = handle_tabelas(&tabela_simbolos, itens, tabela, &contador_palavra, &arq_saida, &ordem_alt, &secText_lido, &arq_saida_aux, &contador_palavra_aux, &flag_alt_order, &contador_linha, &secData_lido, &mapa_de_bits);
 		
-		/*
-		cout << "tabela_de_simbolos:\n" << endl;
-		for(int i;i<tabela_simbolos.size();i++){
-			cout << "token: " << tabela_simbolos[i].token << " valor: " << tabela_simbolos[i].valor << endl;
-		}
-		*/
 	}
 	
 	if(ordem_alt == true){
@@ -868,8 +883,35 @@ int main(int argc, char* argv[]){
 		arq_saida_final = arq_saida;
 	}
 
-	string nome_arq(argv[1]);
+	string nome_arq(argv[3]);
+	
 	ofstream outFile( nome_arq.substr(0, nome_arq.length() - 4 ) + ".obj" );
+	
+	string auxiliar[nome_arq.size()];
+	
+	for(int i=0;i < nome_arq.size();i++){
+		nome_arq[i] = toupper(nome_arq[i]);
+	}
+	
+	outFile << "H: " + nome_arq.substr(0, nome_arq.length() - 4 ) + "\n";
+	
+	outFile << "H: " << arq_saida_final.size() << "\n";
+	
+	outFile << "H: ";
+
+	if(stoi(argv[2]) == 0){
+		for (int e : mapa_de_bits){
+			outFile << e;
+		}	
+	}else{
+		acha_lista_enderecos(&lista_addr, &arq_saida_final);
+		for (int e : lista_addr){
+			outFile << e << " ";
+		}	
+	}
+	
+	outFile << "\n";
+	outFile << "T: ";
 	
     for (int e : arq_saida_final){
         if (e < 10 and e >= 0){
