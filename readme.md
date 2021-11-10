@@ -1,7 +1,32 @@
-README-PseudoAssembler
-Autor: 		Gabriel Tambara Rabelo
-Matricula: 	18/0017021
-Universidade de Brasilia, Departamento de Ciência da computação. 
+README IN BRAZILIAN PORTUGUSE [PT-BR]
+
+README-PseudoAssembler  
+Autor: 		Gabriel Tambara Rabelo  
+Matricula: 	18/0017021  
+Universidade de Brasilia, Departamento de Ciência da computação.  
+
+As instruções para a língua hipotética são representadas pela figura a seguir:
+
+<p align="left">
+  <img src="https://github.com/gtambara/assembler-basic-system-software-project/blob/main/images/instrucoes.png" width="500">
+</p>
+
+O montador é capaz de detectar e notificar erros e possui certar propriedades:
+
+* Não é sensível ao caso
+* Desconsidera tabulação, quebra de linha e espaços desnecessários
+* Pode trabalhar com vetores, utilizando o seguinte formato: LABEL+'NUMERO', sem espaço em torno do '+'
+* Aceita comentários em linhas iniciadas com ";"
+* Utiliza um algoritmo de passagem única
+* Pode criar um rótulo, ler uma quebra de linha e continuar com as intruções em seguida
+* Pode detectar os erros:
+  * declarações de rótulos ausentes
+  * declarações de rótulos repetidos
+  * instruções inválidas
+  * diretivas inválidas
+  * instruções com a quantidade de operando errada
+  * tokens inválidos
+  * dois rótulos na mesma linha
 
 Para compilar o montador, assim como pedido nas instruções do trabalho da universidade, executa-se a seguinte linha de comando no terminal:
 
