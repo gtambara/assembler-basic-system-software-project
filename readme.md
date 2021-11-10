@@ -11,7 +11,7 @@ e para executar o arquivo objeto gerado(realizar a montagem):
 
 .\a.exe [nome do arquivo .asm sem os colchetes] -r x
 
-sendo que 'x' pode ser substituído por 0(mapa de bits) ou 1(lista de endereços) como formas de alocacao
+sendo que 'x' pode ser substituído por 0 (mapa de bits) ou 1 (lista de endereços) como formas de alocacao
 
 ---------------
 
