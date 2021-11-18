@@ -13,7 +13,7 @@ As instruções para a língua hipotética são representadas pela figura a segu
 |    SUB    |    2   |   2  | ACC <- ACC - mem(OP) |
 |    MUL    |    3   |   2  | ACC <- ACC * mem(OP) |
 |    DIV    |    4   |   2  | ACC <- ACC / mem(OP) |
-|    JMP    |    5   |   2  |       PC < OP       |
+|    JMP    |    5   |   2  |       PC <- OP       |
 |    JMPN   |    6   |   2  |   JMP if (ACC < 0)   |
 |    JMPP   |    7   |   2  |   JMP if (ACC > 0)   |
 |    JMPZ   |    8   |   2  |   JMP if (ACC = 0)   |
