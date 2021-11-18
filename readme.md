@@ -7,9 +7,22 @@ Universidade de Brasilia, Departamento de Ciência da computação.
 
 As instruções para a língua hipotética são representadas pela figura a seguir:
 
-<p align="left">
-  <img src="https://github.com/gtambara/assembler-basic-system-software-project/blob/main/images/instrucoes.png" width="500">
-</p>
+| OPERATION | OPCODE | SIZE |     DESCRIPTION     |
+|:---------:|:------:|:----:|:-------------------:|
+|    ADD    |    1   |   2  | ACC <- ACC + mem(OP) |
+|    SUB    |    2   |   2  | ACC <- ACC - mem(OP) |
+|    MUL    |    3   |   2  | ACC <- ACC * mem(OP) |
+|    DIV    |    4   |   2  | ACC <- ACC / mem(OP) |
+|    JMP    |    5   |   2  |       PC < OP       |
+|    JMPN   |    6   |   2  |   JMP if (ACC < 0)   |
+|    JMPP   |    7   |   2  |   JMP if (ACC > 0)   |
+|    JMPZ   |    8   |   2  |   JMP if (ACC = 0)   |
+|    COPY   |    9   |   2  | mem(OP2) <- mem(OP1) |
+|    LOAD   |   10   |   2  |    ACC <- mem(OP)    |
+|   STORE   |   11   |   2  |    mem(OP) <- ACC    |
+|   INPUT   |   12   |   2  |   mem(OP) <- input   |
+|   OUTPUT  |   13   |   2  |   output <- mem(OP)  |
+|    STOP   |   14   |   1  |    stop execution   |
 
 O montador é capaz de detectar e notificar erros e possui certar propriedades:
 
